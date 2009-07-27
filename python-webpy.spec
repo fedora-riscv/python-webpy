@@ -4,7 +4,7 @@
 
 Name:           python-%{pkgname}
 Version:        0.32
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
@@ -62,6 +62,9 @@ purpose with absolutely no restrictions.
 %{python_sitelib}/*
 
 %changelog
+* Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.32-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Tue Jul 07 2009 Ray Van Dolson <rayvd@fedoraproject.org> - 0.32-3
 - Strip shebang from non-scripts
 - Update license information
