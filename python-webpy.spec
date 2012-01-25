@@ -22,7 +22,6 @@ License:        Public Domain and BSD
 
 URL:            http://webpy.org/
 Source0:        http://webpy.org/static/%{srcname}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  python-devel
 BuildArch:      noarch
 
@@ -41,9 +40,6 @@ purpose with absolutely no restrictions.
 %{__rm} -rf %{buildroot}
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
-#%clean
-#%{__rm} -rf %{buildroot}
-
 %files
 %defattr(-,root,root,-)
 %doc PKG-INFO
@@ -52,6 +48,8 @@ purpose with absolutely no restrictions.
 %changelog
 * Wed Jan 25 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.36-1
 - rebase to 0.36
+
+* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.32-7
 
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.32-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
