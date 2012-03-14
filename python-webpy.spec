@@ -1,17 +1,14 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%define pkgname webpy
-%define srcname web.py
+%global pkgname webpy
+%global srcname web.py
 
 Name:           python-%{pkgname}
 Version:        0.36
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
 # The entire source code is Public Domain save for the following exceptions:
-#   web/wsgiserver (CherryPy/BSD)
-#     See LICENSE.wsgiserver.txt
-#     See http://fedoraproject.org/wiki/Licensing:BSD#New_BSD_.28no_advertising.2C_3_clause.29
 #   web/debugerror.py (Modified BSD)
 #     This is from django
 #     See http://code.djangoproject.com/browser/django/trunk/LICENSE
@@ -22,8 +19,10 @@ License:        Public Domain and BSD
 
 URL:            http://webpy.org/
 Source0:        http://webpy.org/static/%{srcname}-%{version}.tar.gz
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  python-devel
 BuildArch:      noarch
+Requires:       python-cherrypy
 
 %description
 web.py is a web framework for python that is as simple as it is
@@ -32,6 +31,10 @@ purpose with absolutely no restrictions.
 
 %prep
 %setup -q -n web.py-%{version}
+rm web/wsgiserver/ssl_builtin.py
+rm web/wsgiserver/ssl_pyopenssl.py
+rm web/wsgiserver/__init__.py
+echo "from cherrypy.wsgiserver import *" >> web/wsgiserver/__init__.py
 
 %build
 %{__python} setup.py build
@@ -40,16 +43,18 @@ purpose with absolutely no restrictions.
 %{__rm} -rf %{buildroot}
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
+
 %files
 %defattr(-,root,root,-)
 %doc PKG-INFO
 %{python_sitelib}/*
 
 %changelog
+* Wed Mar 14 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.36-2
+- unbundle cherrypy-code
+
 * Wed Jan 25 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.36-1
 - rebase to 0.36
-
-* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.32-7
 
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.32-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
