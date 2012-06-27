@@ -1,10 +1,9 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %global pkgname webpy
 %global srcname web.py
 
 Name:           python-%{pkgname}
-Version:        0.36
-Release:        2%{?dist}
+Version:        0.37
+Release:        1%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
@@ -19,8 +18,7 @@ License:        Public Domain and BSD
 
 URL:            http://webpy.org/
 Source0:        http://webpy.org/static/%{srcname}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
 BuildArch:      noarch
 Requires:       python-cherrypy
 
@@ -45,11 +43,16 @@ echo "from cherrypy.wsgiserver import *" >> web/wsgiserver/__init__.py
 
 
 %files
-%defattr(-,root,root,-)
 %doc PKG-INFO
-%{python_sitelib}/*
+%{python_sitelib}/web
+%{python_sitelib}/%{srcname}-%{version}-py?.?.egg-info
+
 
 %changelog
+* Wed Jun 27 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.37-1
+- update to 0.37
+- minor spec cleanup
+
 * Wed Mar 14 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.36-2
 - unbundle cherrypy-code
 
