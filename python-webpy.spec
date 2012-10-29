@@ -1,17 +1,13 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%define pkgname webpy
-%define srcname web.py
+%global pkgname webpy
+%global srcname web.py
 
 Name:           python-%{pkgname}
-Version:        0.32
-Release:        4%{?dist}
+Version:        0.37
+Release:        2%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
 # The entire source code is Public Domain save for the following exceptions:
-#   web/wsgiserver (CherryPy/BSD)
-#     See LICENSE.wsgiserver.txt
-#     See http://fedoraproject.org/wiki/Licensing:BSD#New_BSD_.28no_advertising.2C_3_clause.29
 #   web/debugerror.py (Modified BSD)
 #     This is from django
 #     See http://code.djangoproject.com/browser/django/trunk/LICENSE
@@ -22,11 +18,9 @@ License:        Public Domain and BSD
 
 URL:            http://webpy.org/
 Source0:        http://webpy.org/static/%{srcname}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
 BuildArch:      noarch
-# https://bugs.launchpad.net/webpy/+bug/396789
-Patch0:         web.utils-tests.patch
+Requires:       python-cherrypy
 
 %description
 web.py is a web framework for python that is as simple as it is
@@ -34,34 +28,46 @@ powerful. web.py is in the public domain; you can use it for whatever
 purpose with absolutely no restrictions. 
 
 %prep
-%setup -q -n %{pkgname}
-%patch0 -p1 -b .tests
-# Remove shebang from non scripts.
-%{__sed} -i '1d' web/utils.py
-%{__sed} -i '1d' web/application.py
-%{__sed} -i '1d' web/__init__.py
-%{__cp} web/wsgiserver/LICENSE.txt LICENSE.wsgiserver.txt
+%setup -q -n web.py-%{version}
+rm web/wsgiserver/ssl_builtin.py
+rm web/wsgiserver/ssl_pyopenssl.py
+rm web/wsgiserver/__init__.py
+echo "from cherrypy.wsgiserver import *" >> web/wsgiserver/__init__.py
 
 %build
 %{__python} setup.py build
-
-%check
-%{__python} test/application.py
-%{__python} test/doctests.py
 
 %install
 %{__rm} -rf %{buildroot}
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
-%clean
-%{__rm} -rf %{buildroot}
 
 %files
-%defattr(-,root,root,-)
-%doc LICENSE.txt LICENSE.wsgiserver.txt ChangeLog.txt
-%{python_sitelib}/*
+%doc PKG-INFO
+%{python_sitelib}/web
+%{python_sitelib}/%{srcname}-%{version}-py?.?.egg-info
+
 
 %changelog
+* Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.37-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
+* Wed Jun 27 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.37-1
+- update to 0.37
+- minor spec cleanup
+
+* Wed Mar 14 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.36-2
+- unbundle cherrypy-code
+
+* Wed Jan 25 2012 Matthias Runge <mrunge@matthias-runge.de> - 0.36-1
+- rebase to 0.36
+
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.32-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
+* Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com> - 0.32-5
+- Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.32-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
