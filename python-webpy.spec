@@ -3,7 +3,7 @@
 
 Name:           python-%{pkgname}
 Version:        0.37
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
@@ -20,12 +20,20 @@ URL:            http://webpy.org/
 Source0:        http://webpy.org/static/%{srcname}-%{version}.tar.gz
 BuildRequires:  python2-devel
 BuildArch:      noarch
-Requires:       python-cherrypy
 
-%description
-web.py is a web framework for python that is as simple as it is
-powerful. web.py is in the public domain; you can use it for whatever
-purpose with absolutely no restrictions. 
+%global _description\
+web.py is a web framework for python that is as simple as it is\
+powerful. web.py is in the public domain; you can use it for whatever\
+purpose with absolutely no restrictions.
+
+%description %_description
+
+%package -n python2-%{pkgname}
+Summary: %summary
+Requires:       python-cherrypy
+%{?python_provide:%python_provide python2-%{pkgname}}
+
+%description -n python2-%{pkgname} %_description
 
 %prep
 %setup -q -n web.py-%{version}
@@ -42,13 +50,17 @@ echo "from cherrypy.wsgiserver import *" >> web/wsgiserver/__init__.py
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
 
-%files
+%files -n python2-%{pkgname}
 %doc PKG-INFO
 %{python_sitelib}/web
 %{python_sitelib}/%{srcname}-%{version}-py?.?.egg-info
 
 
 %changelog
+* Sat Aug 19 2017 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.37-11
+- Python 2 binary package renamed to python2-webpy
+  See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.37-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
