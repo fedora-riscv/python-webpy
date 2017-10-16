@@ -1,9 +1,15 @@
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 %global pkgname webpy
 %global srcname web.py
 
+%global commit b725a4f7dda3114c626ccdf7a7004c21efb8ba8b
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
-Version:        0.37
-Release:        11%{?dist}
+Version:        0.40.dev0
+Release:        20170809git%{shortcommit}%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
@@ -17,8 +23,7 @@ Group:          Development/Libraries
 License:        Public Domain and BSD
 
 URL:            http://webpy.org/
-Source0:        http://webpy.org/static/%{srcname}-%{version}.tar.gz
-BuildRequires:  python2-devel
+Source0:        https://github.com/%{pkgname}/%{pkgname}/archive/%{commit}/%{pkgname}-%{version}-%{shortcommit}.tar.gz
 BuildArch:      noarch
 
 %global _description\
@@ -31,32 +36,65 @@ purpose with absolutely no restrictions.
 %package -n python2-%{pkgname}
 Summary: %summary
 Requires:       python-cherrypy
+BuildRequires:  python2-devel
 %{?python_provide:%python_provide python2-%{pkgname}}
 
 %description -n python2-%{pkgname} %_description
 
+
+%if 0%{?with_python3}
+%package -n python3-%{pkgname}
+Summary:        %{summary}
+BuildRequires:  python3-devel
+Requires:       python3-cherrypy
+%{?python_provide:%python_provide python3-%{pkgname}}
+
+%description -n python3-%{pkgname}
+%_description
+
+%endif
+
 %prep
-%setup -q -n web.py-%{version}
-rm web/wsgiserver/ssl_builtin.py
-rm web/wsgiserver/ssl_pyopenssl.py
-rm web/wsgiserver/__init__.py
-echo "from cherrypy.wsgiserver import *" >> web/wsgiserver/__init__.py
+%autosetup -n %{pkgname}-%{commit}
+
 
 %build
 %{__python} setup.py build
+%if 0%{?with_python3}
+%py3_build
+%endif
+
 
 %install
-%{__rm} -rf %{buildroot}
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
+rm %{buildroot}%{python2_sitelib}/web/wsgiserver/wsgiserver3.py*
+
+%if 0%{?with_python3}
+%py3_install
+rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
+%endif
 
 
 %files -n python2-%{pkgname}
-%doc PKG-INFO
-%{python_sitelib}/web
-%{python_sitelib}/%{srcname}-%{version}-py?.?.egg-info
+%doc README.md
+%license LICENSE.txt
+%{python2_sitelib}/web
+%{python2_sitelib}/%{srcname}-%{version}-py%{python2_version}.egg-info
+
+%if 0%{?with_python3}
+%files -n python3-%{pkgname}
+%doc README.md
+%license LICENSE.txt
+%{python3_sitelib}/web
+%{python3_sitelib}/%{srcname}-%{version}-py%{python3_version}.egg-info
+%endif
 
 
 %changelog
+* Mon Oct 16 2017 Jan Beran <jberan@redhat.com> - 0.40.dev0-20170809gitb725a4f
+- new version from the latest commit 0.40.dev0-20170809gitb725a4f
+- modernized specfile with Python 3 subpackage
+
 * Sat Aug 19 2017 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.37-11
 - Python 2 binary package renamed to python2-webpy
   See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3
