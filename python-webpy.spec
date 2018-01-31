@@ -9,7 +9,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
 Version:        0.40.dev0
-Release:        20170809git%{shortcommit}%{?dist}
+Release:        20170810git%{shortcommit}%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
@@ -35,7 +35,7 @@ purpose with absolutely no restrictions.
 
 %package -n python2-%{pkgname}
 Summary: %summary
-Requires:       python-cherrypy
+Requires:       python2-cherrypy
 BuildRequires:  python2-devel
 %{?python_provide:%python_provide python2-%{pkgname}}
 
@@ -91,6 +91,10 @@ rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
 
 
 %changelog
+* Wed Jan 31 2018 Iryna Shcherbina <ishcherb@redhat.com> - 0.40.dev0-20170810gitb725a4f
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
 * Mon Oct 16 2017 Jan Beran <jberan@redhat.com> - 0.40.dev0-20170809gitb725a4f
 - new version from the latest commit 0.40.dev0-20170809gitb725a4f
 - modernized specfile with Python 3 subpackage
