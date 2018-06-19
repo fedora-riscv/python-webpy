@@ -9,7 +9,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
 Version:        0.40.dev0
-Release:        20170811git%{shortcommit}%{?dist}
+Release:        20170812git%{shortcommit}%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
@@ -91,6 +91,9 @@ rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
 
 
 %changelog
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 0.40.dev0-20170812gitb725a4f
+- Rebuilt for Python 3.7
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.40.dev0-20170811gitb725a4f
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
