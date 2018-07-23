@@ -59,14 +59,14 @@ Requires:       python3-cherrypy
 
 
 %build
-%{__python} setup.py build
+%py2_build
 %if 0%{?with_python3}
 %py3_build
 %endif
 
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%py2_install
 rm %{buildroot}%{python2_sitelib}/web/wsgiserver/wsgiserver3.py*
 
 %if 0%{?with_python3}
