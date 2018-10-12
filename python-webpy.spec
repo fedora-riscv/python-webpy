@@ -1,7 +1,3 @@
-%if 0%{?fedora}
-%global with_python3 1
-%endif
-
 %global pkgname webpy
 %global srcname web.py
 
@@ -9,7 +5,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
 Version:        0.40.dev0
-Release:        20170813git%{shortcommit}%{?dist}
+Release:        20170814git%{shortcommit}%{?dist}
 Summary:        A simple web framework for Python
 Group:          Development/Libraries
 
@@ -33,16 +29,6 @@ purpose with absolutely no restrictions.
 
 %description %_description
 
-%package -n python2-%{pkgname}
-Summary: %summary
-Requires:       python2-cherrypy
-BuildRequires:  python2-devel
-%{?python_provide:%python_provide python2-%{pkgname}}
-
-%description -n python2-%{pkgname} %_description
-
-
-%if 0%{?with_python3}
 %package -n python3-%{pkgname}
 Summary:        %{summary}
 BuildRequires:  python3-devel
@@ -52,45 +38,32 @@ Requires:       python3-cherrypy
 %description -n python3-%{pkgname}
 %_description
 
-%endif
 
 %prep
 %autosetup -n %{pkgname}-%{commit}
 
 
 %build
-%py2_build
-%if 0%{?with_python3}
 %py3_build
-%endif
 
 
 %install
-%py2_install
-rm %{buildroot}%{python2_sitelib}/web/wsgiserver/wsgiserver3.py*
-
-%if 0%{?with_python3}
 %py3_install
 rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
-%endif
 
 
-%files -n python2-%{pkgname}
-%doc README.md
-%license LICENSE.txt
-%{python2_sitelib}/web
-%{python2_sitelib}/%{srcname}-%{version}-py%{python2_version}.egg-info
-
-%if 0%{?with_python3}
 %files -n python3-%{pkgname}
 %doc README.md
 %license LICENSE.txt
 %{python3_sitelib}/web
 %{python3_sitelib}/%{srcname}-%{version}-py%{python3_version}.egg-info
-%endif
 
 
 %changelog
+* Fri Oct 12 2018 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.40.dev0-20170814gitb725a4f
+- Python2 binary package has been removed
+  See https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.40.dev0-20170813gitb725a4f
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
