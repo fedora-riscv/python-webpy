@@ -7,7 +7,6 @@ Name:           python-%{pkgname}
 Version:        0.40.dev0
 Release:        20170814git%{shortcommit}%{?dist}
 Summary:        A simple web framework for Python
-Group:          Development/Libraries
 
 # The entire source code is Public Domain save for the following exceptions:
 #   web/debugerror.py (Modified BSD)
