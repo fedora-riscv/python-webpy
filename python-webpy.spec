@@ -5,7 +5,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
 Version:        0.40.dev0
-Release:        20170814git%{shortcommit}%{?dist}
+Release:        20170815git%{shortcommit}%{?dist}
 Summary:        A simple web framework for Python
 
 # The entire source code is Public Domain save for the following exceptions:
@@ -59,6 +59,9 @@ rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
 
 
 %changelog
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.40.dev0-20170815gitb725a4f
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Fri Oct 12 2018 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.40.dev0-20170814gitb725a4f
 - Python2 binary package has been removed
   See https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
