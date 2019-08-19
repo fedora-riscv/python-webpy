@@ -5,7 +5,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
 Version:        0.40.dev0
-Release:        20170816git%{shortcommit}%{?dist}
+Release:        20170817git%{shortcommit}%{?dist}
 Summary:        A simple web framework for Python
 
 # The entire source code is Public Domain save for the following exceptions:
@@ -59,6 +59,9 @@ rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
 
 
 %changelog
+* Mon Aug 19 2019 Miro Hrončok <mhroncok@redhat.com> - 0.40.dev0-20170817gitb725a4f
+- Rebuilt for Python 3.8
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.40.dev0-20170816gitb725a4f
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
