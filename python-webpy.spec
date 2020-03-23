@@ -5,7 +5,6 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
 Version:        0.50
-# Release:        20170819git%{shortcommit}%{?dist}
 Release:        1
 Summary:        A simple web framework for Python
 
@@ -19,7 +18,6 @@ Summary:        A simple web framework for Python
 License:        Public Domain and BSD
 
 URL:            http://webpy.org/
-# Source0:        https://github.com/%{pkgname}/%{pkgname}/archive/%{commit}/%{pkgname}-%{version}-%{shortcommit}.tar.gz
 Source0:        https://github.com/%{pkgname}/%{pkgname}/archive/%{version}.tar.gz#/%{pkgname}-%{version}.tar.gz
 BuildArch:      noarch
 
