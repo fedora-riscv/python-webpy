@@ -4,8 +4,9 @@
 %global commit b725a4f7dda3114c626ccdf7a7004c21efb8ba8b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
-Version:        0.40.dev0
-Release:        20170819git%{shortcommit}%{?dist}
+Version:        0.50
+# Release:        20170819git%{shortcommit}%{?dist}
+Release:        1
 Summary:        A simple web framework for Python
 
 # The entire source code is Public Domain save for the following exceptions:
@@ -18,7 +19,8 @@ Summary:        A simple web framework for Python
 License:        Public Domain and BSD
 
 URL:            http://webpy.org/
-Source0:        https://github.com/%{pkgname}/%{pkgname}/archive/%{commit}/%{pkgname}-%{version}-%{shortcommit}.tar.gz
+# Source0:        https://github.com/%{pkgname}/%{pkgname}/archive/%{commit}/%{pkgname}-%{version}-%{shortcommit}.tar.gz
+Source0:        https://github.com/%{pkgname}/%{pkgname}/archive/%{version}.tar.gz#/%{pkgname}-%{version}.tar.gz
 BuildArch:      noarch
 
 %global _description\
@@ -31,7 +33,15 @@ purpose with absolutely no restrictions.
 %package -n python3-%{pkgname}
 Summary:        %{summary}
 BuildRequires:  python3-devel
+BuildRequires:  python3-pytest
+BuildRequires:  python3-cherrypy
+BuildRequires:  python3-cheroot
+BuildRequires:  python3-markdown
+
 Requires:       python3-cherrypy
+Requires:       python3-cheroot
+Requires:       python3-markdown
+
 %{?python_provide:%python_provide python3-%{pkgname}}
 
 %description -n python3-%{pkgname}
@@ -39,7 +49,7 @@ Requires:       python3-cherrypy
 
 
 %prep
-%autosetup -n %{pkgname}-%{commit}
+%autosetup -n %{pkgname}-%{version}
 
 
 %build
@@ -48,8 +58,9 @@ Requires:       python3-cherrypy
 
 %install
 %py3_install
-rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
 
+%check
+pytest tests
 
 %files -n python3-%{pkgname}
 %doc README.md
@@ -59,6 +70,9 @@ rm %{buildroot}%{python3_sitelib}/web/wsgiserver/wsgiserver2.py*
 
 
 %changelog
+* Mon Mar 23 2020 Matthias Runge <mrunge@redhat.com> - 0.50-1
+- update to 0.50-1, (rhbz#1756261)
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.40.dev0-20170819gitb725a4f
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
