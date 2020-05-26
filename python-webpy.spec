@@ -5,7 +5,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:           python-%{pkgname}
 Version:        0.50
-Release:        2%{dist}
+Release:        3%{dist}
 Summary:        A simple web framework for Python
 
 # The entire source code is Public Domain save for the following exceptions:
@@ -68,6 +68,9 @@ pytest tests
 
 
 %changelog
+* Tue May 26 2020 Miro Hrončok <mhroncok@redhat.com> - 0.50-3
+- Rebuilt for Python 3.9
+
 * Mon Mar 23 2020 Matthias Runge <mrunge@redhat.com> - 0.50-1
 - add tests and also fix dist
 
