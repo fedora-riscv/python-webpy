@@ -3,7 +3,7 @@
 
 Name:           python-%{pkgname}
 Version:        0.61
-Release:        1%{dist}
+Release:        2%{dist}
 Summary:        A simple web framework for Python
 
 # The entire source code is Public Domain save for the following exceptions:
@@ -62,7 +62,10 @@ pytest tests
 
 
 %changelog
-- Sat Jul 25 2020 Paweł Marciniak <sunwire+webpy@gmail.com> - 0.61-1
+* Mon Jul 27 2020 Paweł Marciniak <sunwire+webpy@gmail.com> - 0.61-2
+- Fix small mistake in the changelog
+
+* Sat Jul 25 2020 Paweł Marciniak <sunwire+webpy@gmail.com> - 0.61-1
 - update to 0.61-1
 
 * Tue May 26 2020 Miro Hrončok <mhroncok@redhat.com> - 0.50-3
