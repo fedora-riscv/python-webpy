@@ -52,7 +52,7 @@ Requires:       python3-cheroot
 %py3_install
 
 %check
-pytest tests
+pytest-3 tests
 
 %files -n python3-%{pkgname}
 %doc README.md
