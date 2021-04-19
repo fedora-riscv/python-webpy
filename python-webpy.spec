@@ -29,6 +29,7 @@ purpose with absolutely no restrictions.
 %package -n python3-%{pkgname}
 Summary:        %{summary}
 BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
 BuildRequires:  python3-pytest
 BuildRequires:  python3-cheroot
 
