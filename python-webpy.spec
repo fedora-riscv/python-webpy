@@ -3,7 +3,7 @@
 
 Name:           python-%{pkgname}
 Version:        0.61
-Release:        3%{dist}
+Release:        4%{dist}
 Summary:        A simple web framework for Python
 
 # The entire source code is Public Domain save for the following exceptions:
@@ -63,6 +63,9 @@ pytest tests
 
 
 %changelog
+* Fri Jun 04 2021 Python Maint <python-maint@redhat.com> - 0.61-4
+- Rebuilt for Python 3.10
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.61-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
