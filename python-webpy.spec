@@ -3,7 +3,7 @@
 
 Name:           python-%{pkgname}
 Version:        0.62
-Release:        1%{dist}
+Release:        2%{dist}
 Summary:        A simple web framework for Python
 
 # The entire source code is Public Domain save for the following exceptions:
@@ -63,6 +63,9 @@ pytest -k 'not test_routing' tests
 
 
 %changelog
+* Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.62-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Mon Jun 21 2021 Matthias Runge <mrunge@redhat.com> - 0.62-1
 - update to 0.62 (rhbz#1895901)
 - skip ApplicationTest.test_routing for now
